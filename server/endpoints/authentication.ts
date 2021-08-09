@@ -11,7 +11,7 @@ import {
 const router = Router();
 
 // if password and email is correct returns new token
-router.get('/api/login', timeout, (req, res) => {
+router.post('/api/login', timeout, (req, res) => {
   const { username, password } = req.query;
 
   const user = users.find(

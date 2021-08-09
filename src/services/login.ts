@@ -7,7 +7,9 @@ const login = async (username: string, password: string) => {
     password,
   });
 
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    method: "POST"
+  });
   const data = await response.json();
   const { token } = data;
 

@@ -1,5 +1,7 @@
 import { FC, memo } from 'react';
 
+import './error-block-style.scss';
+
 interface IErrorBlock {
   error: String;
 }
@@ -9,7 +11,7 @@ const ErrorBlock: FC<IErrorBlock> = ({ error }) => {
     return null;
   }
 
-  return <div>{error}</div>;
+  return <div className="error-message">{error}</div>;
 };
 
 export default memo(ErrorBlock);
