@@ -1,8 +1,7 @@
-import { API } from "~/constants";
-import getUrl from "~/utils/getUrl";
+import { API } from '~/constants';
+import getUrl from '~/utils/getUrl';
 
 const logout = async () => {
-    
   const url = getUrl(API.Logout);
 
   await fetch(url, {
@@ -10,7 +9,7 @@ const logout = async () => {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
-    
+
   localStorage.removeItem('token');
 };
 

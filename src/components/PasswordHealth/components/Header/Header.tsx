@@ -20,7 +20,7 @@ const Header: FC<IHeader> = ({ items, username }) => {
     } catch (e) {
       console.log('something goes wrong'); // todo: add notification for user
     }
-  }, [])
+  }, []);
   return (
     <div className="header">
       <div className="user-section">

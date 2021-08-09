@@ -25,6 +25,7 @@ const UpdateModal: FC<IUpdateModal> = ({ item }) => {
       </button>
       <Modal
         className="modal"
+        appElement={document.getElementById('app')}
         isOpen={showModal}
         onRequestClose={() => setShowModal(false)}
         contentLabel="Example Modal"
