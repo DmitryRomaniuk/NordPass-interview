@@ -12,7 +12,7 @@ const router = Router();
 
 // if password and email is correct returns new token
 router.post('/api/login', timeout, (req, res) => {
-  const { username, password } = req.query;
+  const { username, password } = req.body;
 
   const user = users.find(
     (user) => user.username === username && user.password === password

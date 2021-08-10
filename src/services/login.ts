@@ -8,13 +8,17 @@ export interface ILogin {
 }
 
 const login = async (username: string, password: string) => {
-  const url = getUrl(API.Login, {
-    username,
-    password,
-  });
+  const url = getUrl(API.Login);
 
   const response = await fetch(url, {
     method: 'POST',
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
   const data: ILogin = await response.json();
   const { token } = data;
