@@ -1,4 +1,9 @@
-import { ChangeEventHandler, SyntheticEvent, useCallback, useState } from 'react';
+import {
+  ChangeEventHandler,
+  SyntheticEvent,
+  useCallback,
+  useState,
+} from 'react';
 import { useHistory } from 'react-router-dom';
 import { Routes } from '~/constants';
 import login from '~/services/login';
@@ -13,14 +18,10 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
-  
+
   const handleUsernameChange = useCallback<
     ChangeEventHandler<HTMLInputElement>
-  >(
-    (event) =>
-      setUsername(event.target.value),
-    []
-  );
+  >((event) => setUsername(event.target.value), []);
 
   const handlePasswordChange = useCallback<
     ChangeEventHandler<HTMLInputElement>

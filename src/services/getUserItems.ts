@@ -21,12 +21,12 @@ const getUserItems = async (userId?: string): Promise<Array<IItem>> => {
       },
     });
 
-    const data = await response.json();
+    const data: { items: Array<IItem> } = await response.json();
 
     return data.items;
   } catch (error) {
     console.log(error);
-    return []
+    return [];
   }
 };
 

@@ -1,6 +1,4 @@
-
 const itemHasWeakPassword = (password: string) => {
-
   const strength = [
     password.match(/[a-z]/) != null,
     password.match(/[A-Z]/) != null,

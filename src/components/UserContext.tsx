@@ -23,6 +23,12 @@ const UserContext = createContext<IUser>({
   id: null,
 });
 
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+}
+
 export const useUserContext = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
@@ -50,10 +56,10 @@ export const UserContextProvider = ({ children }) => {
       }
 
       if (response.status >= 400) {
-        throw new Error('Something goes wrong')
+        throw new Error('Something goes wrong');
       }
 
-      const data = await response.json();
+      const data: User = await response.json();
 
       setUsername(data?.username);
       setEmail(data?.email);

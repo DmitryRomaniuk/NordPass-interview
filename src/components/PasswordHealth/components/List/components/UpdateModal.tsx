@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
-import { IItem } from "~/services/getUserItems";
+import { FC, useState } from 'react';
+import { IItem } from '~/services/getUserItems';
 import Modal from 'react-modal';
-import itemHasWeakPassword from "~/utils/itemHasWeakPassword";
-import ErrorBlock from "~/components/ErrorBlock/ErrorBlock";
+import itemHasWeakPassword from '~/utils/itemHasWeakPassword';
+import ErrorBlock from '~/components/ErrorBlock/ErrorBlock';
 
 import './update-modal-style.scss';
 
@@ -42,7 +42,7 @@ export const UpdateModal: FC<IUpdateModal> = ({
       {isWeakPassword && newPass && <ErrorBlock error={errorMessage} />}
       <div className="pt-12px text-center">
         <button
-          className={`button ${isDisabled ? 'disabled': ''}`}
+          className={`button ${isDisabled ? 'disabled' : ''}`}
           disabled={isDisabled}
           onClick={() => {
             handleSubmitModal(newPass);

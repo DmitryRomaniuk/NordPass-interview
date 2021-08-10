@@ -1,8 +1,8 @@
 import './spinner-style.scss';
 
 export type SpinnerType = {
-    size?: 'small' | 'middle' | 'large'
-}
+  size?: 'small' | 'middle' | 'large';
+};
 
 export const Spinner = ({ size = 'middle' }: SpinnerType) => {
   return (

@@ -25,7 +25,7 @@ app.use(logger);
 app.use(authentication);
 app.use(items);
 
-const PORT = 9003
+const PORT = 9003;
 
 app.listen(PORT, 'localhost', () => {
   console.log('server is running on http://localhost:%s', PORT);
