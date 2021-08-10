@@ -61,7 +61,7 @@ const Login = () => {
         />
         <ErrorBlock error={errorMessage} />
         <button type="submit" disabled={isLoading} className="button mt-24px">
-          {!isLoading ? <Spinner /> : 'Login'}
+          {isLoading ? <Spinner /> : 'Login'}
         </button>
       </form>
     </div>
