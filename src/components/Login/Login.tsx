@@ -3,11 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { Routes } from '~/constants';
 import login from '~/services/login';
 import ErrorBlock from '../ErrorBlock/ErrorBlock';
+import { Spinner } from '../Spinner';
 
 import './login-style.scss';
 
 const Login = () => {
   const { push } = useHistory();
+  const [isLoading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -27,12 +29,15 @@ const Login = () => {
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage(null);
+    setLoading(true);
 
     try {
       await login(username, password);
       push(Routes.PasswordHealth);
     } catch (error) {
       setErrorMessage('Username or password are incorrect');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,8 +60,8 @@ const Login = () => {
           className="input mt-24px"
         />
         <ErrorBlock error={errorMessage} />
-        <button type="submit" className="button mt-24px">
-          Login
+        <button type="submit" disabled={isLoading} className="button mt-24px">
+          {!isLoading ? <Spinner /> : 'Login'}
         </button>
       </form>
     </div>
