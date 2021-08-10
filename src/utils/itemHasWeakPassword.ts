@@ -1,7 +1,5 @@
-import { IItem } from '~/services/getUserItems';
 
-const itemHasWeakPassword = (item: IItem) => {
-  const { password } = item;
+const itemHasWeakPassword = (password: string) => {
 
   const strength = [
     password.match(/[a-z]/) != null,

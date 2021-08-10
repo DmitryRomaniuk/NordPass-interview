@@ -14,7 +14,7 @@ interface IFilter {
 
 const Filter: FC<IFilter> = ({ items }) => {
   const weakItemsCount = items.reduce(
-    (count, item) => (itemHasWeakPassword(item) ? count + 1 : count),
+    (count, item) => (itemHasWeakPassword(item.password) ? count + 1 : count),
     0
   );
 

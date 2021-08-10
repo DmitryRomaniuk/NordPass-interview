@@ -35,7 +35,7 @@ const PasswordHealth = () => {
     },
     {
       path: Routes.Weak,
-      items: items.filter(itemHasWeakPassword),
+      items: items.filter((item) => itemHasWeakPassword(item.password)),
     },
     {
       path: Routes.Reused,

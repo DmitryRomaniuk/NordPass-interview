@@ -1,6 +1,10 @@
 import { FC, useState } from "react";
 import { IItem } from "~/services/getUserItems";
 import Modal from 'react-modal';
+import itemHasWeakPassword from "~/utils/itemHasWeakPassword";
+import ErrorBlock from "~/components/ErrorBlock/ErrorBlock";
+
+import './update-modal-style.scss';
 
 interface IUpdateModal {
   item: IItem;
@@ -14,6 +18,11 @@ export const UpdateModal: FC<IUpdateModal> = ({
   handleSubmitModal,
 }) => {
   const [newPass, setNewPass] = useState('');
+
+  const isWeakPassword = itemHasWeakPassword(newPass);
+  const errorMessage =
+    'The password is not strong enough (it must contain lowercase, uppercase letters, numbers and special characters)';
+  const isDisabled = isWeakPassword || !newPass;
 
   return (
     <Modal
@@ -30,9 +39,11 @@ export const UpdateModal: FC<IUpdateModal> = ({
         value={newPass}
         onChange={(event) => setNewPass(event.target.value)}
       />
+      {isWeakPassword && newPass && <ErrorBlock error={errorMessage} />}
       <div className="pt-12px text-center">
         <button
-          className="button"
+          className={`button ${isDisabled ? 'disabled': ''}`}
+          disabled={isDisabled}
           onClick={() => {
             handleSubmitModal(newPass);
           }}
