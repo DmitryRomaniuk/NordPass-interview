@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { API, Routes } from '~/constants';
-import getUrl from '~/utils/getUrl';
+import { Routes } from '~/constants';
+import getUser from '~/services/getUser';
 
 interface IUser {
   updateUser: () => void;
@@ -23,11 +23,6 @@ const UserContext = createContext<IUser>({
   id: null,
 });
 
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-}
 
 export const useUserContext = () => useContext(UserContext);
 
@@ -44,27 +39,14 @@ export const UserContextProvider = ({ children }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(getUrl(API.User), {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
 
-      if (response.status === 401) {
-        localStorage.removeItem('token');
-        push(Routes.Login);
-      }
-
-      if (response.status >= 400) {
-        throw new Error('Something goes wrong');
-      }
-
-      const data: User = await response.json();
+      const data = await getUser();
 
       setUsername(data?.username);
       setEmail(data?.email);
       setId(data?.id);
     } catch (error) {
+      push(Routes.Login);
       setErrorMessage(error?.message);
     }
 

@@ -5,6 +5,10 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^~(.*)$': '<rootDir>/src$1',
+  },
+  setupFiles: ['<rootDir>/src/setupMock.ts'],
   globals: {
     'ts-jest': {
       isolatedModules: true,
