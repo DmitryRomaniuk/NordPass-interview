@@ -1,81 +1,59 @@
-import {FC, useState} from 'react';
-import {IItem} from "~/services/getUserItems";
+import { FC, useCallback, useState } from 'react';
+import { IItem } from '~/services/getUserItems';
 import ItemIcon from './components/ItemIcon';
 import updateItem from '../../../../services/updateItem';
-import Modal from 'react-modal';
 
 import './list-style.scss';
+import { UpdateModal } from './components/UpdateModal';
 
 interface IList {
-  items: Array<IItem>,
+  items: Array<IItem>;
 }
 
-interface IUpdateModal {
-  item: IItem;
-}
-
-const UpdateModal: FC<IUpdateModal> = ({ item }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [newPass, setNewPass] = useState('');
+const List: FC<IList> = ({ items }) => {
+  const [item, setItem] = useState<IItem | null>(null);
+  const handleCloseModal = useCallback(() => {
+    setItem(null);
+  }, []);
+  const handleSubmitModal = useCallback(
+    async (newPass) => {
+      try {
+        await updateItem({
+          ...item,
+          password: newPass,
+        });
+        setItem(null);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [item]
+  );
 
   return (
     <>
-      <button className="update" onClick={() => setShowModal(true)}>
-        Update Password
-      </button>
-      <Modal
-        className="modal"
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
-        contentLabel="Example Modal"
-      >
-        <h1>Update Password</h1>
-        <input
-          placeholder="new password"
-          className="input"
-          value={newPass}
-          onChange={(event) => setNewPass(event.target.value)} 
-        />
-        <div className="pt-12px text-center">
-          <button className="button" onClick={async () => {
-            await updateItem({
-              ...item,
-              password: newPass,
-            })
+      <ul className="list">
+        {items.map((item) => (
+          <li key={item.id} className="item">
+            <ItemIcon title={item.title} />
+            <div>
+              <div className="title">{item.title}</div>
+              <div className="description">{item.description}</div>
+            </div>
+            <button className="update" onClick={() => setItem(item)}>
+              Update Password
+            </button>
+          </li>
+        ))}
+      </ul>
 
-            window.location.reload();
-          }}>Change</button>
-          <button className="button ml-12px" onClick={() => {
-            setNewPass('');
-            setShowModal(false)
-          }}>
-            Cancel
-          </button>
-        </div>
-      </Modal>
+      <UpdateModal
+        item={item}
+        handleCloseModal={handleCloseModal}
+        handleSubmitModal={handleSubmitModal}
+      />
     </>
   );
-}
-
-const List: FC<IList> = ({items}) => (
-  <ul className="list">
-    {
-      items.map((item) => (
-        <li className="item">
-          <ItemIcon title={item.title}/>
-          <div>
-            <div className="title">
-              {item.title}
-            </div>
-            <div className="description">
-              {item.description}
-            </div>
-          </div>
-          <UpdateModal item={item} />
-        </li>
-      ))
-    }
-  </ul>
-)
+};
 
 export default List;
